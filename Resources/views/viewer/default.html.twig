@@ -47,9 +47,8 @@ See https://github.com/adobe-type-tools/cmap-resources
     {% if deletePdfInTmpAfterRenderized is defined and deletePdfInTmpAfterRenderized == true %}
         <script>
             document.addEventListener("pagesloaded", function(e) {
-                //alert("Carga de pdf terminada");
                 $.ajax({
-                    url: "{{ url('jjalvarezl_erase_pdf') }}",
+                    url: "{{ path('jjalvarezl_erase_pdf') }}",
                     type: "POST",
                     {% if pdf is defined and tmpPdfDirectory is defined %}
                         data: { "PdfTmpPath": '{{ tmpPdfDirectory }}{{ pdf }}' },
@@ -59,16 +58,12 @@ See https://github.com/adobe-type-tools/cmap-resources
                         data: { "PdfTmpPath": '' },
                     {% endif %}
                     success: function (response) {
-                        //alert(response.status);
                         if (response != ""){
                             alert(response);
                         } else {
                             console.log("Successful pdf deletion!!!.");
                         }
-                    }/*,
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert(jqXHR.responseText + textStatus + errorThrown);
-                    }*/
+                    }
                 });
             });
         </script>
