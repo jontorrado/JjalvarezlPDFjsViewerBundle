@@ -35,8 +35,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports.OptionKind = exports.AppOptions = void 0;
 
 var _viewer_compatibility = __webpack_require__(2);
-var DEFAULT_URL = BASE_URL + '/bundles/jjalvarezlpdfjsviewer/web/compressed.tracemonkey-pldi-09.pdf';
-var RUTA_VISOR_WEB = BASE_URL + "/bundles/jjalvarezlpdfjsviewer/web/";
+var DEFAULT_URL = '/bundles/jjalvarezlpdfjsviewer/web/compressed.tracemonkey-pldi-09.pdf';
+var RUTA_VISOR_WEB = window.location.protocol + "//" + window.location.host + "/bundles/jjalvarezlpdfjsviewer/web/";
 
 const OptionKind = {
   VIEWER: 0x02,
@@ -2246,7 +2246,7 @@ function webViewerInitialized() {
   let file;
   const queryString = document.location.search.substring(1);
   const params = (0, _ui_utils.parseQueryString)(queryString);
-  file = "file" in params ? params.file : _app_options.AppOptions.get("defaultUrl");
+  file = "file" in params ? params.file : DEFAULT_URL;
   validateFileURL(file);
   const fileInput = document.createElement("input");
   fileInput.id = appConfig.openFileInputName;

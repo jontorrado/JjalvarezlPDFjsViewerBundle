@@ -29,7 +29,6 @@ See https://github.com/adobe-type-tools/cmap-resources
     <title>{% block titulo %} Prueba de pdf {% endblock %}</title>
 
 
-    <script>BASE_URL = '{{ asset('') }}';</script>
     <link rel="stylesheet" href="{{ asset('bundles/jjalvarezlpdfjsviewer/web/viewer.css') }}">
 
     <script src="{{ asset('bundles/jjalvarezlpdfjsviewer/web/compatibility.js') }}"></script>
@@ -48,28 +47,23 @@ See https://github.com/adobe-type-tools/cmap-resources
     {% if deletePdfInTmpAfterRenderized is defined and deletePdfInTmpAfterRenderized == true %}
         <script>
             document.addEventListener("pagesloaded", function(e) {
-                //alert("Carga de pdf terminada");
                 $.ajax({
                     url: "{{ url('jjalvarezl_erase_pdf') }}",
                     type: "POST",
                     {% if pdf is defined and tmpPdfDirectory is defined %}
-                        data: { "PdfTmpPath": '{{ tmpPdfDirectory }}{{ pdf }}' },
+                        data: { "PdfTmpPath": '{{ asset(tmpPdfDirectory ~ pdf) }}' },
                     {% elseif pdf is defined %}
                         data: { "PdfTmpPath": {{ asset('/bundles/jjalvarezlpdfjsviewer/tmpPdf/' ~ pdf) }} },
                     {% else %}
                         data: { "PdfTmpPath": '' },
                     {% endif %}
                     success: function (response) {
-                        //alert(response.status);
                         if (response != ""){
                             alert(response);
                         } else {
                             console.log("Successful pdf deletion!!!.");
                         }
-                    }/*,
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert(jqXHR.responseText + textStatus + errorThrown);
-                    }*/
+                    }
                 });
             });
         </script>
@@ -77,7 +71,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
     {% if pdf is defined and tmpPdfDirectory is defined %}
         <script>
-            DEFAULT_URL = '{{ tmpPdfDirectory }}{{ pdf }}';
+            DEFAULT_URL = '{{ asset(tmpPdfDirectory ~ pdf) }}';
         </script>
     {% elseif pdf is defined %}
         <script>
